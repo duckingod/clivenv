@@ -1,4 +1,4 @@
-# VENV
+# CLI\_VENV
 
 Fast access/manage to [virtualenv](https://github.com/pypa/virtualenv) between different python versions.
 
@@ -14,7 +14,7 @@ user@host$
 
 Install by
 ```
-pip install venv
+pip install cli_venv
 ```
 
 ## Example
