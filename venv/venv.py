@@ -25,9 +25,6 @@ class Env(object):
             self.path = path + '/' + self.NAME
             self.ss = ss
             self.delete = delete
-            with open(self.path, 'w') as f:
-                for s in self.ss:
-                    f.write(s+'\n')
         def __enter__(self):
             return self.path
         def __exit__(self, type, value, traceback):
@@ -35,6 +32,7 @@ class Env(object):
                 os.remove(self.path)
     BASE = '.venv/'
     base = '.venv/'
+    TMP_PATH = base + 'tmp'
     def __init__(self, py_cmd=None):
         if py_cmd:
             try:
@@ -60,7 +58,9 @@ class Env(object):
         # from https://stackoverflow.com/a/6944649
         s = [USE_ENV_BASH]
         s.append('. ' + self.activate_path)
-        self.TmpFile(self.base, s, delete=False)
+        with open(self.TMP_PATH, 'w') as f:
+            for _s in s:
+                f.write(_s+'\n')
     def leave(self):
         os.system('unvenv')
         
@@ -111,7 +111,7 @@ def main():
     parser = argparse.ArgumentParser(
             description=description,
             formatter_class=argparse.RawDescriptionHelpFormatter)
-    actions = ['use', 'delete', 'sync', 'updatepip']
+    actions = ['use', 'delete', 'sync']
     parser.add_argument(
             'actions',
             nargs='*', help='{auto, python, python3, ...} or {'+', '.join(actions)+'}, default: auto and use')
@@ -143,6 +143,9 @@ def main():
             env.delete()
             print('Done')
     if args.action == 'sync':
+        if not 'VENV_RUNNING' in os.environ: 
+            print('Please sync inside a virtualenv')
+            exit()
         print('Syncing pip')
         requirements = env.make_requirements(args.pip_backward)
         os.system('pip install -r ' + requirements)
