@@ -1,7 +1,7 @@
 #/bin/usr/env bash
 'pip' $@
 if [ ${VENV_RUNNING+x} ]; then
-    if [ "$1" == "install" ] || [ "$1" == "uninstall" ]; then
+    if [ "$1" = "install" ] || [ "$1" = "uninstall" ]; then
         path=$VIRTUAL_ENV-pip
         pip freeze > $path
     fi
