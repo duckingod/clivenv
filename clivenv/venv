@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+venv-py $@
+
+tmpFile=$PWD/.venv/tmp
+if [ -f "$tmpFile" ]; then
+    . $tmpFile
+    rm $tmpFile
+fi
+

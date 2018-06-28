@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="clivenv",
-    version="0.0.2",
+    version="0.0.3",
     author="duckingod",
     author_email="kingoduck@gmail.com",
     description="Fast access/manage to virtualenv between different python versions.",
@@ -20,6 +20,9 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Environment :: Console"
     ),
-    scripts=[join('venv', 'venv'), join('venv', 'venv.py'), join('venv', 'venv_pip_recording')],
+    entry_points={
+        'console_scripts': [ 'venv-py=clivenv.venv:main' ]
+    },
+    scripts=[join('clivenv', 'venv'), join('clivenv', 'venv_pip_recording')],
 )
 
