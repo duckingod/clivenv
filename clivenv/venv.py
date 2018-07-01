@@ -81,12 +81,13 @@ class Env(object):
             if f[-4:] == '-pip':
                 with open(self.base + f) as f:
                     for l in f:
-                        n, v = l.split('==')
-                        packages[n] = packages[n] + [v]
+                        if '==' in l:
+                            n, v = l.strip().split('==')
+                            packages[n] = packages[n] + [v]
         with open(self.base + 'requirements.txt', 'w') as f:
             oper = '<=' if backward else '>='
             for p, vs in packages.items():
-                f.write(p + ','.join([oper+v for v in vs]))
+                f.write(p + ','.join([oper+v for v in vs]) + '\n')
         return self.base + 'requirements.txt'
 
 def main():
