@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="clivenv",
-    version="0.0.4",
+    version="0.0.5",
     author="duckingod",
     author_email="kingoduck@gmail.com",
     description="Fast access/manage to virtualenv between different python versions.",
